@@ -24,7 +24,7 @@ following:
 
 >`cd javafn`
 
->`fn init --runtime java`
+>`fn init --runtime java8`
 
 The output will be:
 ```sh
