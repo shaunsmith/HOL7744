@@ -477,6 +477,7 @@ generated image out to a remote Docker repository by using the `--local`
 option.
 
 Return to your terminal window and in the `javafn` directory type:
+
 ![](images/userinput.png)
 >`fn deploy --local --app myapp`
 
