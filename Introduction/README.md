@@ -9,39 +9,21 @@ concepts like applications and routes.
 
 So let's get started!
 
-As you make your way throught this tutorial, look out for this icon.
+As you make your way through this tutorial, look out for this icon.
 ![](images/userinput.png) Whenever you see it, it's time for you to
 perform an action.
 
 
 ## Installing Fn
 
-Setting up a working Fn install is a two-step process.  First you need
-to ensure you have the necessary prerequisites and then you can install
-Fn itself.
-
-### Prerequisites
-
-Before we can install Fn you'll need:
-
-1. A computer running Linux or MacOS.  If you have a Windows machine the
-easiest thing to do is install [VirtualBox](https://www.virtualbox.org/)
-and run a free Linux virtual machine.
-2. [Docker](https://www.docker.com/) 17.05 (or higher) needs to be
-installed and running.
-
-
-> __NOTE__ In this tutorial we'll work in a purely local development
+In this tutorial we'll work in a purely local development
 mode.  However, when deploying functions to a remote Fn server, a Docker
 Hub (or other Docker registry) account is required.
-
-That's it.  You can use your favorite IDE for function development.
-However, for this tutorial, an IDE isn't necessary.
 
 
 ### Downloading and Installing Fn
 
-From a terminal type the following:
+Open a terminal window using the desktop link and type the following:
 
 
 ![](images/userinput.png)
@@ -92,8 +74,9 @@ machine as Fn provides the necessary Go compiler and tools as a Docker
 container.  Let's walk through your first function to become familiar
 with the process and how Fn supports development.
 
-Open a new terminal window and leave the Fn server running in the first
-terminal.
+
+![user input](images/userinput.png)
+>Open a new terminal window using the desktop shortcut.
 
 Before we start developing we need to set the `FN_REGISTRY`
 environment variable.  Normally, it's set to your Docker repository and
@@ -105,15 +88,23 @@ development mode so we can set the `FN_REGISTRY` variable to an invented
 >`export FN_REGISTRY=fndemouser`
 
 
-With that out of the way, create a new directory named "hello" and cd
-into it:
+With that out of the way, create a new directory in your home
+directory named "hello" and cd into it:
 
 ![user input](images/userinput.png)
+>`cd ~`
+>
 >`mkdir hello`
 >
 >`cd hello`
 
-Copy and paste the following Go code into a file named `func.go`.
+Copy and paste the Go code below into a file named `func.go` by
+opening the gedit editor:
+
+![user input](images/userinput.png)
+>`gedit func.go & `
+
+Here's the function source to paste into gedit and then save:
 
 ![user input](images/userinput.png)
 >```go
@@ -136,7 +127,8 @@ of arguments and this is explored in other Fn tutorials.
 
 #### Initializing your Function Configuration
 
-Let's use the `fn` CLI to initialize this function's configuration.
+Let's use the `fn` CLI to initialize this function's configuration. In
+your terminal window type:
 
 ![user input](images/userinput.png)
 > `fn init`
@@ -146,8 +138,11 @@ Found go, assuming go runtime.
 func.yaml created
 ```
 
-`fn` found your `func.go` file and generated a `func.yaml` file with
-contents that should look like:
+`fn` found your `func.go` file and generated a `func.yaml` file.
+ Display the file contents by typing:
+
+![user input](images/userinput.png)
+> `cat func.yaml`
 
 ```yaml
 name: hello

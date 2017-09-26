@@ -12,22 +12,17 @@ As you make your way throught this tutorial, look out for this icon.
 ![](images/userinput.png) Whenever you see it, it's time for you to
 perform an action.
 
-## Prequisites
-
-This tutorial requires you to have both Docker and Fn installed and an
-Fn server running locally.  If you need help with Fn installation you
-can find instructions in the
-[Introduction to Fn](../Introduction/README.md) tutorial.
-
 # Getting Started
 
 Let's start by creating a new function.  In a terminal type the
 following:
 
 ![](images/userinput.png)
+>`cd ~`
+>
 >`mkdir javafn`
 
-> `cd javafn`
+>`cd javafn`
 
 >`fn init --runtime java`
 
@@ -41,11 +36,9 @@ func.yaml created
 `fn init` creates an simple function with a bit of boilerplate to get you
 started. The `--runtime` option is used to indicate that the function
 we're going to develop will be written in Java.  A number of other
-runtimes are also supported.  If you have the `tree` utility installed
-you can see the directory structure that the init command has created.
+runtimes are also supported.
 
-![](images/userinput.png)
->`tree`
+The directory structure that the init command created is:
 
 ```sh
 .
@@ -98,7 +91,7 @@ and test libraries your function needs.
 Let's build and run the generated function.  We're working locally and
 won't be pushing our function images to a Docker registry like Docker
 Hub. So before we build let's set `FN_REGISTRY` to a local-only registry
-username like `fndemouser`.
+username like `fndemouser`.  In your terminal window type:
 
 ![](images/userinput.png)
 >`export FN_REGISTRY=fndemouser`
@@ -217,7 +210,56 @@ from standard input and returned "Hello, Bob!".
 # Exploring the Code
 
 We've generated, compiled, and run the Java function so let's take a
-look at the code.  You may want to open the code in your favorite IDE or editor.
+look at the code in Eclipse.
+
+![](images/userinput.png)
+> Open Eclipse using the desktop icon
+
+#### Import the Maven project
+
+![](images/userinput.png)
+> Select "File>Import"
+
+![](images/1.png)
+
+![](images/userinput.png)
+>Choose "Existing Maven Project"
+
+![](images/2.png)
+
+![](images/userinput.png)
+>Browse to select the Maven project directory
+
+![](images/3.png)
+
+![](images/userinput.png)
+>Select `javafn` in Home
+
+![](images/4.png)
+
+![](images/userinput.png)
+>Press Finish to complete the import
+
+![](images/5.png)
+
+
+#### Switch to Java Perspective
+
+We're working with Java so let's switch to the Java perspective.
+
+![](images/userinput.png)
+>Select "Window>Perspective>Open Perspective>Java"
+
+![](images/6.png)
+
+## The Generated Function
+
+
+![](images/userinput.png)
+>Expand the `hello` project in the Eclipse Package Explorer window and
+ open `com.example.fn.HelloFunction`
+
+![](images/7.png)
 
 Below is the generated `com.example.fn.HelloFunction` class.  As you can
 see the function is just a method on a POJO that takes a string value
@@ -281,6 +323,20 @@ public class HelloFunctionTest {
 }
 ```
 
+Let's run the generated test.
+
+![](images/userinput.png)
+>Expand `src/test/java` under the `hello` project in the Eclipse Package
+Explorer window and open `com.example.fn.HelloFunctionTest`.  Right
+click on the file name and choose "Run As>Junit Test"
+
+![](images/8.png)
+
+The JUnit view should open and be green with one successful test.
+
+![](images/9.png)
+
+
 Let's add a test that confirms that when an input string like "Bob" is
 provided we get the expected result.
 
@@ -300,34 +356,22 @@ Add the following method to `HelloFunctionTest`:
 You can see the `withBody()` method used to specify the value of the
 function input.
 
-You can run the tests by building your function with `fn build`.  This
-will cause Maven to compile and run the updated test class.  If you
-opened the code in an IDE you can run the tests directly from there.
-
 ![](images/userinput.png)
->`fn build`
+> Run the `HelloFunctionTest` class by right clicking on the file name
+in the Package Explorer window and choosing "Run As>Junit Test".
 
-```sh
-...
--------------------------------------------------------
- T E S T S
--------------------------------------------------------
-Running com.example.fn.HelloFunctionTest
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.508 sec
+![](images/10.png)
 
-Results :
+You should have two passing tests.
 
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
-...
-Successfully built 85fb9b00348e
-Successfully tagged fndemouser/javafn:0.0.1
-Function fndemouser/javafn:0.0.1 built successfully.
-```
+![](images/11.png)
 
 # Accepting JSON Input
 
 Let's convert this function to use JSON for its input and output.
-Replace the definition of `HelloFunction` with the following:
+
+![](images/userinput.png)
+> Replace the definition of `HelloFunction` with the following:
 
 ```java
 package com.example.fn;
@@ -358,42 +402,17 @@ to the function. JSON support is built-in but input and output binding
 is extensible and you could (for instance) plug in marshallers for other
 data formats like protobuf, avro or xml.
 
-Let's build the updated function.
 
 ![](images/userinput.png)
->`fn build`
+>Let's rerun the tests by once again right clicking on the
+`HelloFunctionTest` class and choosing "Run As>JUnit Test".
 
-```sh
-...
--------------------------------------------------------
- T E S T S
--------------------------------------------------------
-Running com.example.fn.HelloFunctionTest
-An exception was thrown during Input Coercion: Failed to coerce event to user function parameter type class com.example.fn.HelloFunction$Input
-...
-An exception was thrown during Input Coercion: Failed to coerce event to user function parameter type class com.example.fn.HelloFunction$Input
-...
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.893 sec <<< FAILURE!
-...
-Results :
+Oops! You should see failures in the JUnit View!
 
-Tests in error:
-  shouldReturnGreeting(com.example.fn.HelloFunctionTest): One and only one response expected, but 0 responses were generated.
-  shouldReturnWithInput(com.example.fn.HelloFunctionTest): One and only one response expected, but 0 responses were generated.
+![](images/12.png)
 
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0
 
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time: 3.477 s
-[INFO] Finished at: 2017-09-21T14:59:21Z
-[INFO] Final Memory: 16M/128M
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.12.4:test (default-test) on project hello: There are test failures.
-```
-
-Oops! as we can see this function build has fail due to test failures--we
+We can see in the Console view the test failure exceptions--we
 changed the code significantly but didn't update our tests!  We really
 should be doing test driven development and updating the test first but
 at least our bad behavior has been caught.  Let's update the tests
@@ -441,7 +460,13 @@ and expecting a result of
 }
 ```
 
-If you re-run the test via `fn build` we can see that it now passes.
+
+![](images/userinput.png)
+>If you re-run the test via "Run As>JUnit Test" we can see the test
+now passes.
+
+![](images/13.png)
+
 
 # Deploying your Java Function
 
@@ -451,6 +476,7 @@ server on the local machine we can save time by not pushing the
 generated image out to a remote Docker repository by using the `--local`
 option.
 
+Return to your terminal window and in the `javafn` directory type:
 ![](images/userinput.png)
 >`fn deploy --local --app myapp`
 
@@ -464,7 +490,9 @@ Successfully tagged fndemouser/javafn:0.0.2
 Updating route /javafn using image fndemouser/javafn:0.0.2...
 ```
 
-Review the last line of the deploy output.  When deployed a function's
+The deploy command will build and test your code to make sure it's in
+good working order.  You can see the Maven build and test output in the
+console.  Note the last line of the output.  When deployed, a function's
 Docker image is associated with the route specified in the
 `func.yaml` which defaults to the containing directory name.  In this
 case the route is `/javafn`.
