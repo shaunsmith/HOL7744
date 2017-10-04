@@ -145,10 +145,13 @@ func.yaml created
 > `cat func.yaml`
 
 ```yaml
-name: hello
 version: 0.0.1
 runtime: go
 entrypoint: ./func
+build_image: ""
+run_image: ""
+expects:
+  config: []
 ```
 
 #### Understanding func.yaml
@@ -156,8 +159,6 @@ entrypoint: ./func
 The generated `func.yaml` file contains metadata about your function and
 declares a number of properties including:
 
-* the name of your function--taken from the containing directory
-name
 * the version--automatically starting at 0.0.1
 * the name of the runtime/language--which was set
 automatically based on the presence of `func.go`
@@ -170,7 +171,7 @@ this example.
 ### Running Your First Function
 
 With the `hello` directory containing `func.go` and `func.yaml` you've
-got everything you need to run the function.  So let's run it and
+got everything you need to run the "hello" function.  So let's run it and
 observe the output.  Note that the first time you build a
 function of a particular language it takes longer as Fn downloads
 the necessary Docker images.
